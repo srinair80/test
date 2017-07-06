@@ -1,0 +1,63 @@
+buildscript {
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath "org.jetbrains.kotlin:kotlin-android-extensions:$kotlinVersion"
+    }
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion androidCompileSdkVersion
+    buildToolsVersion androidBuildToolsVersion
+
+    defaultConfig {
+        applicationId 'net.gouline.kotlindemo'
+        minSdkVersion 15
+        targetSdkVersion androidCompileSdkVersion
+        versionCode 1
+        versionName '1.0'
+        testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'),
+                    'proguard-rules.pro',
+                    'proguard-rules-debug.pro'
+            testProguardFile('proguard-rules-test.pro')
+        }
+
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'),
+                    'proguard-rules.pro',
+                    'proguard-rules-release.pro'
+        }
+    }
+}
+
+kapt {
+    generateStubs = true
+}
+
+dependencies {
+    // Android/Google
+    compile "com.android.support:appcompat-v7:$libAndroidSupportVersion"
+
+    // Kotlin
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlinVersion"
+
+    // Architecture
+    compile "io.reactivex:rxjava:$libRxJavaVersion"
+    compile "io.reactivex:rxandroid:$libRxAndroidVersion"
+
+    // Unit tests
+    testCompile "junit:junit:$libJUnitVersion"
+    testCompile "org.robolectric:robolectric:$libRobolectricVersion"
+    testCompile "org.robolectric:shadows-support-v4:$libRobolectricVersion"
+    testCompile "org.mockito:mockito-core:$libMockitoVersion"
+}
